@@ -35,4 +35,3 @@ jobs:
       - name: Deploy to github pages
         uses: actions/deploy-pages@v4
         id: deployment
-        artifact_name: doc
