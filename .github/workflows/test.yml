@@ -17,8 +17,22 @@ jobs:
       - name: Build sphinx
         run: uv run sphinx-build source/ doc/
       
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          path doc/
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to github pages
+        uses: actions/deploy-pages@v4
+        id: deployment
+        artifact_name: doc
