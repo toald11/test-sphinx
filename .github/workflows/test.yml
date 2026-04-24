@@ -5,6 +5,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: sphinxdoc/sphinx-latexpdf
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -16,6 +18,12 @@ jobs:
       
       - name: Build sphinx
         run: uv run sphinx-build source/ doc/
+      
+      - name: Build sphinx-pdf
+        run: uv run sphinx-build -M latexpdfja source/ pdf/
+
+      - name: Move pdf into HTML dir
+        run: cp pdf/latex/*.pdf doc/test.pdf
       
       - name: Upload
         uses: actions/upload-pages-artifact@v3
