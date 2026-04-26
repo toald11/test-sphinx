@@ -15,6 +15,14 @@ jobs:
         uses: astral-sh/setup-uv@v8.1.0
         with:
           python-version: 3.13t
+
+      - name: Setup plantuml
+        run: |-
+          apt update
+          apt install wget openjdk-17-jre-headless fonts-noto-cjk
+          wget -O /usr/local/bin/plantuml.jar https://github.com/plantuml/plantuml/releases/download/v1.2026.2/plantuml-mit-1.2026.2.jar
+          echo skinparam defaultFontName \"Noto Sans CJK JP\" > /usr/local/share/jp.pu
+          echo skinparam dpi 100 >> /usr/local/share/jp.pu
       
       - name: Build sphinx
         run: uv run sphinx-build source/ doc/
