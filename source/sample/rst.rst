@@ -1003,14 +1003,16 @@ PlantUML
       - .. math::
             :label: math-sample
 
-            (a + b)^2 &= a^2 + 2ab + b^2 \\
-            (a - b)^2 &= a^2 - 2ab + b^2
+            (a + b)^2 = a^2 + 2ab + b^2 \\
+            (a - b)^2 = a^2 - 2ab + b^2
 
         .. math::
             :label: math-sample2
 
-            (a + b)(a - b) &= a^2 - b^2 \\
+            (a + b)(a - b) = a^2 - b^2 \\
 
+
+.. warning:: 表の中に数式を入れる場合、等式で整列する ``&=`` を使用するとLaTeX PDFを出力する際にエラーになる。
 
 
 バージョン表記
