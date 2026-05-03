@@ -23,6 +23,7 @@ jobs:
           kanji-config-updmap-sys auto
 
       - name: Setup plantuml
+        run: |-
           apt install -y wget openjdk-17-jre-headless 
           wget -O /usr/local/bin/plantuml.jar https://github.com/plantuml/plantuml/releases/download/v1.2026.2/plantuml-mit-1.2026.2.jar
           echo skinparam defaultFontName \"Noto Sans CJK JP\" > /usr/local/share/jp.pu
