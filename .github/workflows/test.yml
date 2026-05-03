@@ -16,10 +16,14 @@ jobs:
         with:
           python-version: 3.13t
 
-      - name: Setup plantuml
+      - name: Setup Japanese
         run: |-
           apt update -y
-          apt install -y wget openjdk-17-jre-headless fonts-noto-cjk
+          apt install -y fonts-noto-cjk fonts-ipafont
+          kanji-config-updmap-sys auto
+
+      - name: Setup plantuml
+          apt install -y wget openjdk-17-jre-headless 
           wget -O /usr/local/bin/plantuml.jar https://github.com/plantuml/plantuml/releases/download/v1.2026.2/plantuml-mit-1.2026.2.jar
           echo skinparam defaultFontName \"Noto Sans CJK JP\" > /usr/local/share/jp.pu
           echo skinparam dpi 100 >> /usr/local/share/jp.pu
