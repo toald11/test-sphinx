@@ -1,2 +1,3 @@
 build/
 .drawio
+__pycache__
