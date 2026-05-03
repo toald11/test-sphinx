@@ -1,0 +1,240 @@
+\ProvidesPackage{traditionalstyle}[Custom Sphinx Style]
+
+% ==================================
+% パラメータの受け取り
+% ==================================
+\RequirePackage{kvoptions}
+
+\SetupKeyvalOptions{
+  family=myparam,
+  prefix=myparam@
+}
+
+% \DeclareStringOption[default値]{オプション名}
+\DeclareStringOption[default]{testparam}    % パラメータtestparam:文字列型
+\DeclareBoolOption[false]{testflag}         % パラメータtestflag:真偽値型
+
+\ProcessKeyvalOptions*
+
+% デバッグ
+\typeout{Traditional Style Params}
+\typeout{testparam = \myparam@testparam}
+\ifmyparam@testflag
+    \typeout{testflag = ON}
+\fi
+
+% ==================================
+% 余白設定
+% ==================================
+\RequirePackage{geometry}
+\geometry{
+    top=20mm,
+    bottom=20mm,
+    left=20mm,
+    right=20mm
+}
+
+% ==================================
+% 行間設定
+% ==================================
+
+% \renewcommand{\baselinestretch}{0.75}
+
+% ==================================
+% ヘッダー/フッター
+% ==================================
+% \RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[L]{\leftmark}
+    \fancyhead[R]{\thepage}
+    \fancyhead[C]{PLAIN}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\fancypagestyle{normal}{
+    \fancyhf{}
+    \fancyhead[L]{\leftmark}
+    \fancyfoot[R]{\thepage / \pageref{LastPage}}
+    \fancyhead[C]{NORMAL}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\fancypagestyle{empty}{
+    \fancyhf{}
+    \fancyhead[L]{\leftmark}
+    \fancyhead[R]{\thepage}
+    \fancyhead[C]{EMPTY}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\fancypagestyle{title}{
+    \fancyhf{}
+    \fancyhead[L]{}
+    \fancyhead[R]{}
+    \fancyhead[C]{TITLE}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\fancypagestyle{plainhead}{
+    \fancyhf{}
+    \fancyhead[L]{}
+    \fancyhead[R]{\includegraphics[height=3em]{icon_light.png}}
+    \fancyfoot[R]{\thepage / \pageref{LastPage}}
+    \fancyhead[C]{PLAINHEAD}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\fancypagestyle{plainfoot}{
+    \fancyhf{}
+    \fancyhead[L]{}
+    \fancyhead[R]{}
+    \fancyhead[C]{PLAINFOOT}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+% ==================================
+% チャプター/セクション装飾
+% ==================================
+% チャプター
+\RequirePackage{titlesec}
+\titleformat{\chapter}[block]
+    {\bfseries\Huge}
+    {\rule{2pt}{2ex}\hspace{1ex}\#\thesection}
+    {2ex}
+    {\filright}
+    {}
+\titlespacing*{\chapter}
+    {0pt}{0pt}{20pt}
+    
+% セクション
+\titleformat{\section}
+    {\bfseries\Large}
+    {§ \thesection}
+    {1em}
+    {}
+    {}
+\titlespacing*{\section}
+    {0pt}{12pt}{6pt}
+
+% サブセクション
+\titleformat{\subsection}
+    {\large\bfseries\color{darkgray}}
+    {\thesubsection}
+    {1em}
+    {}
+    {}
+\titlespacing*{\subsection}
+    {0pt}{10pt}{4pt}
+
+\newcommand{\sectionbreak}{\clearpage}          %セクションの先頭で改ページ
+% \newcommand{\subsectionbreak}{\clearpage}       %サブセクションの先頭で改ページ
+
+
+% ==================================
+% タイトル
+% ==================================
+
+\renewcommand{\sphinxmaketitle}{
+%   \newgeometry{top=100mm} % タイトルページ用余白
+  \thispagestyle{title}
+
+  % twocolumnの場合は状態を保存してonecolumnに変更
+  \makeatletter
+  \newif\ifwas@twocolumn
+    \if@twocolumn
+    \was@twocolumntrue
+    \onecolumn
+  \else
+    \was@twocolumnfalse
+  \fi
+  \makeatother
+
+  % タイトル本文
+  % @title = タイトル
+  % @author = 著者
+  % @date = 日付
+  {
+    \centering
+    \vspace*{\fill}
+    \hspace*{\fill}
+    \fbox{
+        \begin{minipage}{0.8\textwidth}
+        \centering
+        \vspace{5mm}
+        {\Huge \@title \par}
+        \vspace{1cm}
+        {\Large \@author \par}
+        \vspace{5mm}
+        {\large \@date \par}
+        \vspace{1cm}
+        \end{minipage}
+    }
+    \hspace*{\fill}
+    \vspace*{\fill}
+  }
+
+  % twocolumn設定だったらもとに戻す
+  \makeatletter
+  \ifwas@twocolumn
+    \twocolumn
+  \fi
+  \makeatletter
+
+  \restoregeometry % タイトルページ用余白をもとに戻す
+  \clearpage
+}
+
+% ==================================
+% 定義リスト
+% ==================================
+
+\usepackage{enumitem}
+\setlist[description]{style=nextline}
+
+% ==================================
+% インラインリテラル
+% ==================================
+
+\usepackage{tcolorbox}
+\makeatletter
+% 元の定義を退避
+\let\orig@sphinxupquote\sphinxupquote
+% 元の定義を上書き
+\renewcommand{\sphinxupquote}[1]{
+  \if\relax\detokenize{#1}\relax
+    % 内容が空文字である場合、ボックスは使用しない
+    \orig@sphinxupquote{#1}
+  \else
+    \tcbox[
+        on line,
+        colframe=gray,
+        colback=white,
+        size=fbox,
+        top=0pt,
+        bottom=0pt,
+        boxsep=1.2pt
+    ]{%
+        \orig@sphinxupquote{#1}
+    }%
+  \fi
+}
+\makeatother
+
+% ==================================
+% テーブル
+% ==================================
+
+\usepackage{longtable}              % ページを超えたテーブルを正しく描画する。
+\setlength{\arrayrulewidth}{1pt}  % 罫線の太さ
+\renewcommand{\arraystretch}{1}     % セルの行間
+\setlength{\tabcolsep}{6pt}         % セルの横の余白
+

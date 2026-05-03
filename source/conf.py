@@ -17,7 +17,7 @@ release = '0.1'
 extensions = []
 
 templates_path = ['_templates']
-exclude_patterns = []
+exclude_patterns = ['_format']
 
 numfig = True
 
@@ -85,3 +85,60 @@ html_sidebars = {
 }
 
 html_title = "sphinxメモ"
+
+
+# -- Options for PDF output --------------------------------------------------
+
+latex_engine = 'platex'
+latex_docclass = {
+    'howto': 'jsreport',
+    'manual': 'jsbook'
+}
+# latex_engine = 'lualatex'
+# latex_docclass = {
+#     'howto': 'ltjsreport',
+#     'manual': 'ltjsbook'
+# }
+
+latex_documents = [
+    ('index', f'{project}.tex', project, author, 'manual'),
+]
+
+latex_additional_files = ['traditional_style.sty']
+
+latex_elements = {}
+styleparams = [
+    "testparam=HelloWorld",
+    "testflag",
+]
+latex_elements['preamble'] = rf'''
+    \usepackage[{",".join(styleparams)}]{{traditional_style}}
+'''
+latex_elements['papersize'] = 'a4paper'     # a4paper/a5paper/letterpaper
+latex_elements['pointsize'] = '10pt'        # 10pt/11pt/12pt
+latex_elements['extraclassoptions'] = 'oneside,openany,onecolumn' # 片面/空白頁なし
+latex_elements['figure_align'] = "htbp"
+latex_elements['maxlistdepth'] = 6      # 箇条書きなどの深さの最大値
+# latex_elements['tableofcontents'] = r'\sphinxtableofcontents'
+# latex_elements['atendofbody'] = r''     # 索引の直前に追加されるtexソース
+# latex_elements['makeindex'] = r'\makeindex'       # 索引作成開始のコマンド
+# latex_elements['printindex'] = r'\printindex'     # 索引表示のコマンド
+
+sphinxsetup = [
+    "verbatimhintsturnover=false",      # コードブロックがページをまたぐ場合のヒントを非表示
+    "verbatimwithframe=false",          # コードブロックのボーダーを表示
+    "verbatimborder=0.75pt",            # コードブロックのボーダーの幅
+    "verbatimsep=0.4em",                  # コードブロックの余白
+    "VerbatimColor={rgb}{0.95,0.95,0.90}",      # コードブロックの背景色
+    "VerbatimBorderColor={rgb}{1.0,1.0,1.0}",   # コードブロックのボーダーの色
+    "VerbatimHighlightColor={rgb}{1,1,1}",      # コードブロックのハイライト部分の色
+    "InnerLinkColor={rgb}{0.2,0.2,0.2}",        # ドキュメント内のリンクの色
+    "OuterLinkColor={rgb}{0,0.1,0.5}",          # 外部リンクの色
+    "TableRowColorHeader={gray}{0.8}",          # 表のヘッダーの色(colorrows)
+    "TableRowColorOdd={gray}{1.0}",             # 表の奇数列の色(colorrows)
+    "TableRowColorEven={gray}{1.0}",            # 表の偶数列の色(colorrows)
+]
+latex_elements['sphinxsetup'] = ",".join(sphinxsetup)
+
+# latex_table_style = ['booktabs', 'colorrows']     # 表のスタイル(booktabs:縦線なし)
+latex_table_style = ['colorrows']                 # 表のスタイル(colorrowsのみ:縦線あり)
