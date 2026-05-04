@@ -60,7 +60,7 @@ html_theme_options["light_logo"] = "icon_light.png"
 html_theme_options["dark_logo"] = "icon_dark.png"
 pdf_icon = {
     "name": "PDF",
-    "url": "https://toald11.github.io/test-sphinx/test.pdf",
+    "url": "https://toald11.github.io/test-sphinx/sphinx-test.pdf",
     "html": "",
     "class": "fa-regular fa-file-pdf fa-2x",
 }

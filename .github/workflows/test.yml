@@ -37,10 +37,8 @@ jobs:
 
       - name: Move pdf into HTML dir
         run: |-
-          ls -la
-          ls -la doc/
-          ls -la pdf/latex/
-          cp pdf/latex/*.pdf doc/test.pdf
+          PDFS=$(find ./build/latex/latex -name '*.tex' | sed 's/\.tex$/.pdf/')
+          cp $PDFS doc/
       
       - name: Upload
         uses: actions/upload-pages-artifact@v3
