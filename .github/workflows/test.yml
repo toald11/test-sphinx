@@ -37,7 +37,7 @@ jobs:
 
       - name: Move pdf into HTML dir
         run: |-
-          PDFS=$(find ./build/latex/latex -name '*.tex' | sed 's/\.tex$/.pdf/')
+          PDFS=$(find ./pdf/latex/ -name '*.tex' | sed 's/\.tex$/.pdf/')
           cp $PDFS doc/
       
       - name: Upload
