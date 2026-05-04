@@ -238,3 +238,12 @@
 \renewcommand{\arraystretch}{1}     % セルの行間
 \setlength{\tabcolsep}{6pt}         % セルの横の余白
 
+
+% ==================================
+% 強調
+% ==================================
+
+% 斜体
+\protected\def\sphinxstyleemphasis#1{%
+    {\color[rgb]{0.6,0.1,0.1}\emph{#1}}%
+}

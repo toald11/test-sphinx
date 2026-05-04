@@ -19,7 +19,7 @@ jobs:
       - name: Setup Japanese
         run: |-
           apt update -y
-          apt install -y fonts-noto-cjk fonts-ipafont
+          apt install -y fonts-noto-cjk fonts-ipafont texlive-font-utils
           kanji-config-updmap-sys auto
 
       - name: Setup plantuml

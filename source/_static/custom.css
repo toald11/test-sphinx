@@ -1,0 +1,6 @@
+/* *text* に対応する em 要素 */
+em {
+  font-style: italic; /* イタリック解除 */
+  background: linear-gradient(transparent 75%, #c61538b9 75%);
+  padding: 0 0.2em;
+}

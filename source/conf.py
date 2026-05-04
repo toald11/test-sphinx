@@ -14,9 +14,7 @@ release = '0.1'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = [
-    'sphinx_copybutton',
-]
+extensions = []
 
 templates_path = ['_templates']
 exclude_patterns = ['_format']
@@ -27,6 +25,10 @@ language = 'ja'
 
 extensions.append("sphinxcontrib.plantuml")
 plantuml = 'java -jar /usr/local/bin/plantuml.jar -config /usr/local/share/jp.pu'
+plantuml_output_format = 'svg'
+plantuml_latex_output_format = 'pdf'
+
+extensions.append("sphinx_copybutton")
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -39,17 +41,18 @@ html_css_files = [
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css",
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css",
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/regular.min.css",
+    "custom.css",
 ]
 html_theme_options = {}
 html_theme_options["light_css_variables"] = {
     "color-brand-primary": "#CC6600",
-    "color-brand-content": "#CCCC99"
+    "color-brand-content": "#CC8844"
 }
 html_theme_options["dark_css_variables"] = {
     "color-brand-primary": "#FFBB00",
     "color-brand-content": "#FFFF99"
 }
-html_theme_options["sidebar_hide_name"] = True
+html_theme_options["sidebar_hide_name"] = False
 html_theme_options["navigation_with_keys"] = True
 html_theme_options["top_of_page_buttons"] = ["view", "edit"]
 html_theme_options["announcement"] = "furo themeは<em>html_theme_options</em>でページ全体の通知を設定できる。"
@@ -83,10 +86,11 @@ html_sidebars = {
         "sidebar/navigation.html",
         # "sidebar/ethical-ads.html",
         "sidebar/scroll-end.html",
+        # "sidebar/variant-selector.html",
     ]
 }
 
-html_title = "sphinxメモ"
+html_title = "設計ガイド"
 
 
 # -- Options for PDF output --------------------------------------------------
