@@ -36,7 +36,11 @@ jobs:
         run: uv run sphinx-build -M latexpdfja source/ pdf/
 
       - name: Move pdf into HTML dir
-        run: cp pdf/latex/*.pdf doc/test.pdf
+        run: |-
+          ls -la
+          ls -la doc/
+          ls -la pdf/latex/
+          cp pdf/latex/*.pdf doc/test.pdf
       
       - name: Upload
         uses: actions/upload-pages-artifact@v3
