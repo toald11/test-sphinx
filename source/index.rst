@@ -16,3 +16,5 @@ Sphinxメモ
    sample/rst
    sample/theme
    sample/pdf
+
+   studyroom/classification_marks
