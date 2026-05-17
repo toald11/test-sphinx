@@ -14,11 +14,21 @@
 \DeclareStringOption[default]{testparam}    % パラメータtestparam:文字列型
 \DeclareBoolOption[false]{testflag}         % パラメータtestflag:真偽値型
 
+\DeclareStringOption[UNDEF]{clmark@classification}    % パラメータclmark@classification
+\DeclareStringOption[未定義]{clmark@agency}    % パラメータclmark@agency
+\DeclareStringOption[未定義]{clmark@range}    % パラメータclmark@range
+\DeclareStringOption[未定義]{clmark@period}    % パラメータclmark@period
+
+
 \ProcessKeyvalOptions*
 
 % デバッグ
 \typeout{Traditional Style Params}
 \typeout{testparam = \myparam@testparam}
+\typeout{clmark@classification = \myparam@clmark@classification}
+\typeout{clmark@agency = \myparam@clmark@agency}
+\typeout{clmark@range = \myparam@clmark@range}
+\typeout{clmark@period = \myparam@clmark@period}
 \ifmyparam@testflag
     \typeout{testflag = ON}
 \fi
@@ -142,6 +152,10 @@
 % ==================================
 % タイトル
 % ==================================
+% \usepackage[table]{xcolor}
+% \usepackage{array}
+\usepackage{tabularx}
+\usepackage{makecell}
 
 \renewcommand{\sphinxmaketitle}{
 %   \newgeometry{top=100mm} % タイトルページ用余白
@@ -157,6 +171,27 @@
     \was@twocolumnfalse
   \fi
   \makeatother
+
+  % 機密区分マーク
+  {
+    \color{red}
+    \hfill
+    \begin{tabularx}{65mm}{|c|X|}
+      \hline
+      \multicolumn{2}{|c|}{
+        \rule{0pt}{18pt}
+        \bfseries\fontsize{20pt}{22pt}\selectfont
+        \myparam@clmark@classification
+      } \\
+      \hline
+      \makecell{\bfseries 管理機関\\(Agency)} & \myparam@clmark@agency \\
+      \hline
+      \makecell{\bfseries 開示範囲\\(Range)} & \myparam@clmark@range \\
+      \hline
+      \makecell{\bfseries 解除条件\\(Declasify on)} & \myparam@clmark@period \\
+      \hline
+    \end{tabularx}
+  }
 
   % タイトル本文
   % @title = タイトル
@@ -180,6 +215,7 @@
     }
     \hspace*{\fill}
     \vspace*{\fill}
+
   }
 
   % twocolumn設定だったらもとに戻す

@@ -402,4 +402,90 @@ T.B.D
 機密区分表示のデザインを考える
 ------------------------------
 
-T.B.D
+機密区分の表示機能が有するべき機能は以下が挙げられる。
+
+- 表紙に以下を表示する。
+
+  - 機密区分(文書内に含まれる機密レベルの中で最も高いもの)
+  - 機密解除条件
+  - 承認者の名前
+  - 文書を作成した機関
+
+- 各ページ以下を表示する。
+
+  - 各ページの機密区分(ページ内に含まれる機密レベルの中で最も高いもの)
+
+
+SphinxのHTML出力では、サイドバーを活用する。
+
+HTML版
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+:confval:`html_context` に機密区分に関する情報を登録することで、機密区分表示をサイドバーに出力する。
+実施例を :numref:`code-classification-mark-html` に示す。
+出力例は、HTML版のサイドバーに出力されている。
+
+.. literalinclude:: /_template/sidebar/classification_mark.html
+    :name: code-classification-mark-html
+    :linenos:
+    :language: jinja
+    :caption: HTML版機密区分表示の実施例(_template/sidebar/classification_mark.html)
+
+
+
+
+LaTeX PDF版
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+スタイルファイルのパラメータを使用して機密区分に関する情報を入力する。
+スタイルファイルのパラメータは、 :confval:`html_context` の値を流用可能である。
+実施例を :numref:`code-classification-mark-latex`
+出力例は、 `LaTeX版の表紙 <https://toald11.github.io/test-sphinx/sphinx-test.pdf>`_ に出力されている。
+
+.. code-block:: latex
+    :name: code-classification-mark-latex
+    :linenos:
+    :caption: LaTeX版機密区分表示の実施例
+
+    \SetupKeyvalOptions{
+        family=myparam,
+        prefix=myparam@
+    }
+
+    \DeclareStringOption[UNDEF]{clmark@classification}    % パラメータclmark@classification
+    \DeclareStringOption[未定義]{clmark@agency}    % パラメータclmark@agency
+    \DeclareStringOption[未定義]{clmark@range}    % パラメータclmark@range
+    \DeclareStringOption[未定義]{clmark@period}    % パラメータclmark@period
+
+    % 機密区分マーク
+    {
+        \color{red}
+        \hfill
+        \begin{tabularx}{65mm}{|c|X|}
+        \hline
+        \multicolumn{2}{|c|}{
+            \rule{0pt}{18pt}
+            \bfseries\fontsize{20pt}{22pt}\selectfont
+            \myparam@clmark@classification
+        } \\
+        \hline
+        \makecell{\bfseries 管理機関\\(Agency)} & \myparam@clmark@agency \\
+        \hline
+        \makecell{\bfseries 開示範囲\\(Range)} & \myparam@clmark@range \\
+        \hline
+        \makecell{\bfseries 解除条件\\(Declasify on)} & \myparam@clmark@period \\
+        \hline
+        \end{tabularx}
+    }
+
+発展
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+機密区分の表示は、あくまでも機密区分運用を確実に実施するためのものである。
+したがって、表示する内容は文書を使用する組織によって最適なものを選択するべきである。
+また、文書に表示される機密区分に関する情報は、ドキュメントの作成者が個別に設定するのではなく機密区分を管理するシステムソフトウェアと連携できることが望ましい。
+
+HTML版では、REST APIなどを使用して表示コンテンツを表示する方法がある。
+しかし、この方法は機密区分を管理するシステムソフトウェアがダウンしたときに正常な表示ができない。
+また、LaTeX PDF版と連携できない。
+実施するなら、conf.pyにて文書生成時に機密区分を管理するシステムソフトウェアから機密区分に関する情報を取得し、自動設定するのが良い。

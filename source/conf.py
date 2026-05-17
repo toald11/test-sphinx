@@ -30,6 +30,9 @@ plantuml_latex_output_format = 'pdf'
 
 extensions.append("sphinx_copybutton")
 
+extensions.append("sphinx_sitemap")
+html_baseurl = 'https://toald11.github.io/test-sphinx/'
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
@@ -80,17 +83,32 @@ html_theme_options["footer_icons"] = [
 
 html_sidebars = {
     "**": [
+        # --- furo theme --- 
         "sidebar/scroll-start.html",
         "sidebar/brand.html",
+        "sidebar/classification_mark.html",
         "sidebar/search.html",
+        "sidebar/step_navs.html",
         "sidebar/navigation.html",
-        # "sidebar/ethical-ads.html",
         "sidebar/scroll-end.html",
-        # "sidebar/variant-selector.html",
+        # "sidebar/ethical-ads.html",
+
+        # --- book theme --- 
+        # "searchbox.html",
+
     ]
 }
 
+html_context = {
+    "clmark_classification": "PUBLIC",
+    "clmark_agency": "xxx .inc<br> xx事業所<br> xxx部",
+    "clmark_range": "インターネット",
+    "clmark_period": "yyyy/mm/dd<br>xxx審議会",
+}
+
 html_title = "設計ガイド"
+
+html_last_updated_fmt = '%x %X %z'
 
 
 # -- Options for PDF output --------------------------------------------------
@@ -116,6 +134,10 @@ latex_elements = {}
 styleparams = [
     "testparam=HelloWorld",
     "testflag",
+    f'clmark@classification={html_context["clmark_classification"]}',
+    f'clmark@agency={html_context["clmark_agency"].replace('<br>','\n')}',
+    f'clmark@range={html_context["clmark_range"]}',
+    f'clmark@period={html_context["clmark_period"]}',
 ]
 latex_elements['preamble'] = rf'''
     \usepackage[{",".join(styleparams)}]{{traditional_style}}

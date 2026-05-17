@@ -1,0 +1,80 @@
+<style>
+
+body {
+    --clmark-color: {{ clmark_light_color | default('#EA0000') }};
+}
+
+body[data-theme="light"] {
+    --clmark-color: {{ clmark_light_color | default('#EA0000') }};
+}
+
+body[data-theme="dark"] {
+    --clmark-color: {{ clmark_dark_color | default('#FF3333') }};
+}
+
+@media (prefers-color-scheme: light) {
+    body[data-theme="auto"] {
+        --clmark-color: {{ clmark_light_color | default('#EA0000') }};
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body[data-theme="auto"] {
+        --clmark-color: {{ clmark_dark_color | default('#FF3333') }};
+    }
+}
+
+table#clmark {
+    border-collapse: collapse;
+    border: 3px solid var(--clmark-color); 
+    width: calc(100% - 2rem);
+    table-layout: fixed;
+    margin: 1rem;
+}
+
+#clmark td {
+    border: 2px solid var(--clmark-color);
+    color: var(--clmark-color);
+    text-align: center;
+}
+
+#clmark p {
+    margin: 0;
+    font-weight: bold;
+}
+
+tr.clmark-title {
+    font-size: 18pt;
+}
+
+tr.clmark-desc {
+    font-size: 10pt;
+}
+
+</style>
+
+<table id="clmark" >
+    <tbody>
+        <colgroup>
+            <col style="width: 35%;">
+            <col style="width: 65%;">
+        </colgroup>
+
+        <tr class="clmark-title">
+            <td colspan="2"><p> {{ clmark_classification | default ('未定義') }}</p></td>
+        </tr>
+        <tr class="clmark-desc">
+            <td><p>管理機関<br>(Agency)</p></td>
+            <td><p>{{ clmark_agency | default('未定義') }}</p></td>
+        </tr>
+        <tr class="clmark-desc">
+            <td><p>開示範囲<br>(Range)</p></td>
+            <td><p>{{ clmark_range | default('未定義') }}</p></td>
+        </tr>
+        <tr class="clmark-desc">
+            <td><p>解除条件<br>(Declasify on)</p></td>
+            <td><p>{{ clmark_period | default('未定義') }}</p></td>
+        </tr>
+    </tbody>
+</table>
+

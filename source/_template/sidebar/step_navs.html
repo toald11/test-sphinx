@@ -1,0 +1,29 @@
+<style>
+body .step-nav-button {
+    color: var(--color-brand-primary);
+}
+
+.step-nav-next {
+    margin-left: auto; 
+    margin-right: 1rem;
+}
+
+.step-nav-prev {
+    margin-left: 1rem; 
+}
+</style>
+
+<!-- 余白を挿入 -->
+<div style="height: 2rem"></div>
+
+<div style="display: flex;">
+    {% if prev %}
+        <!-- 戻るボタンを表示 -->
+        <a href="{{ prev.link }}" class="step-nav-button step-nav-prev"> ◀ prev </a>
+    {% endif %}
+    {% if next %}
+        <!-- 次へボタンを表示 -->
+        <a href="{{ next.link }}" class="step-nav-button step-nav-next"> next ▶ </a>
+    {% endif %}
+
+</div>
